@@ -60,6 +60,10 @@
                     return response;
                 });
         }
+        /**
+        * @description realiza una petición a la API de Github
+        * solicitando los miembros de ngVenezuela.
+        */
         function getMembers () {
             var peticion = $http({
                 method : 'GET',
