@@ -1,6 +1,8 @@
 /**
  * Rutas de la aplicación.
  */
+/*jslint browser: true*/
+/*global $, angular, routes, removerCache*/
 (function () {
     'use strict';
     angular
@@ -9,22 +11,42 @@
         .run(removerCache);
 
     // Inyectando dependencias.
-    routes.$inject = ['$stateProvider','$urlRouterProvider','$locationProvider'];
+    routes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
     /**
      * @description gestiona las rutas de la aplicación.
      * @param $stateProvider
      * @param $urlRouterProvider
      */
-    function routes($stateProvider, $urlRouterProvider, $locationProvider){
+    function routes($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/');
         $stateProvider
-            .state('home',{
+            .state('home', {
             url : '/',
             controller: 'HomeController',
             controllerAs : 'ctrl',
-            templateUrl : 'templates/home/home_tpl.html'
+            templateUrl : './templates/home/home_tpl.html'
+        })
+            .state('quienes', {
+            url: '/quienes-somos',
+            controller: 'QuienesSomosController',
+            controllerAs: 'ctrl',
+            templateUrl: './templates/quienes/quienes_tpl.html'
+        })
+            .state('repos', {
+            url: '/repos',
+            controller: 'RepoController',
+            controllerAs: 'ctrl',
+            templateUrl: './templates/repos/repos_tpl.html'
+        })
+            .state('unirme', {
+            url: '/quiero-unirme',
+            templateUrl: './templates/unirme/unirme_tpl.html'
+        })
+            .state('contacto', {
+            url: '/contacto',
+            templateUrl: './templates/contacto/contacto_tpl.html'
         });
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
     }
     // Inyectando dependencias.
     removerCache.$inject = ['$rootScope', '$templateCache'];
@@ -33,9 +55,9 @@
      * @param $rootScope
      * @param $templateCache
      */
-    function removerCache ($rootScope, $templateCache) {
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
-            if (typeof(current) !== 'undefined'){
+    function removerCache($rootScope, $templateCache) {
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+            if (typeof (current) !== 'undefined') {
                 $templateCache.remove(current.templateUrl);
             }
         });
